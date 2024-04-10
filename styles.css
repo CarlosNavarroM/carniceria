@@ -50,5 +50,8 @@ h5{
     p {
         font-size: 2em; /* Puedes ajustar este valor según lo desees */
         color:black;
-        font-weight: bold;
+    }
+
+    .empavonada {
+        opacity: 0.6; /* Puedes ajustar este valor según lo desees */
     }

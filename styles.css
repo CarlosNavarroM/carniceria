@@ -10,6 +10,16 @@ h2{
     color:red ;
     padding-bottom:1em;
     font-style: italic;
+    font-weight: bold;
+
+}
+
+h5{
+    color:black;
+    font-size: 2em;
+    padding-bottom:1em;
+    font-style: italic;
+    font-weight: bold;
 }
 
 .footer{
@@ -37,3 +47,8 @@ h2{
     
     }
 
+    p {
+        font-size: 2em; /* Puedes ajustar este valor según lo desees */
+        color:black;
+        font-weight: bold;
+    }

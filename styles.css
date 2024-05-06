@@ -37,6 +37,15 @@ h5{
     max-height: 100%;
 }
 
+.login-container{
+    padding: 2em;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #ccc;
+    background-color: #f9f9f9;
+    margin-top: 2em;
+
+}
 
 @media (min-width: 992px) { /* Pantallas grandes*/
     #carouselExampleCaptions .carousel-item img {
@@ -55,3 +64,5 @@ h5{
     .empavonada {
         opacity: 0.6; /* Puedes ajustar este valor según lo desees */
     }
+
+

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras - Carnicería "El Carvajal"</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="index.html">Carnicería "El Carvajal"</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="productos.html">Productos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="contacto.html">Contacto</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="sugerencias.html">Sugerencias</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="login.html"><i class="fas fa-user"></i> Iniciar sesión</a>
+                        <li class="nav-item">
+                            <a class="nav-link" href="carrito.html"><i class="fas fa-shopping-cart"></i> Carrito</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main class="container mt-5">
+        <h2>Carrito de Compras</h2>
+        <table class="table" id="cartTable">
+            <thead>
+                <tr>
+                    <th scope="col">Producto</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Carne</td>
+                    <td>$3500</td>
+                    <td><input type="number" value="1" min="1" class="form-control quantity-input"></td>
+                    <td>$3500</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm remove-item">Eliminar</button>
+                    </td>
+                </tr>
+                <!-- Repetir para otros productos según sea necesario -->
+            </tbody>
+        </table>
+        <button class="btn btn-danger" onclick="emptyCart()">Vaciar Carrito</button>
+        <div class="d-flex justify-content-between">
+            <button class="btn btn-outline-secondary">Continuar Comprando</button>
+            <button class="btn btn-primary">Proceder al Pago</button>
+        </div>
+    </main>
+
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+        // JavaScript para manejar las acciones del carrito
+        document.querySelectorAll('.remove-item').forEach(button => {
+            button.addEventListener('click', function() {
+                this.closest('tr').remove();
+                updateCartTotal();
+            });
+        });
+
+        document.querySelectorAll('.quantity-input').forEach(input => {
+            input.addEventListener('change', function() {
+                updateQuantity(this);
+            });
+        });
+
+        function updateQuantity(input) {
+            const row = input.closest('tr');
+            const price = parseFloat(row.cells[1].textContent.replace('$', ''));
+            const quantity = input.value;
+            const total = price * quantity;
+            row.cells[3].textContent = `$${total.toFixed(2)}`;
+            updateCartTotal();
+        }
+
+        function updateCartTotal() {
+            let total = 0;
+            document.querySelectorAll('#cartTable tbody tr').forEach(row => {
+                const price = parseFloat(row.cells[3].textContent.replace('$', ''));
+                total += price;
+            });
+            // Aquí puedes actualizar el total en algún lugar de la página, si es necesario
+        }
+
+        function emptyCart() {
+            const tableBody = document.querySelector('#cartTable tbody');
+            tableBody.innerHTML = '';
+            updateCartTotal();
+        }
+    </script>
+</body>
+</html>

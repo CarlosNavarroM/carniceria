@@ -14,6 +14,7 @@ h2{
 
 }
 
+
 h5{
     color:black;
     font-size: 2em;
@@ -26,6 +27,8 @@ h5{
     
     padding: 0.3em 0;
     text-align: center;
+    width: 100%;
+  
 }
 
 #productos{
@@ -37,16 +40,30 @@ h5{
     max-height: 100%;
 }
 
-.login-container{
-    padding: 2em;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    box-shadow: 0 0 10px #ccc;
-    background-color: #f9f9f9;
-    margin-top: 2em;
+.login-container {
+    padding: 1em;
 
+    
+  
+    margin-top: 1em;
+    width: 95%; 
+    margin: 1em auto; 
+  
 }
 
+.card:hover {
+    transform: scale(1.05); /* Ligeramente más grande */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5); /* Sombra más definida */
+}
+
+.product-rating i {
+    color: gold; /* Color dorado para las estrellas */
+}
+
+.product-price {
+    color: rgb(128, 0, 0); /* Precio en verde para destacar */
+    font-weight: bold;
+}
 @media (min-width: 992px) { /* Pantallas grandes*/
     #carouselExampleCaptions .carousel-item img {
         max-height: 768px; 

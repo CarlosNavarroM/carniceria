@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proceder al Pago - Carnicería "El Carvajal"</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header id="navbar-placeholder">
+    </header>
+    <main class="container mt-5">
+        <h2>Proceder al Pago</h2>
+        <form id="paymentForm">
+            <div class="mb-3">
+                <label for="name" class="form-label">Nombre Completo</label>
+                <input type="text" class="form-control" id="name" required>
+            </div>
+            <div class="mb-3">
+                <label for="address" class="form-label">Dirección</label>
+                <input type="text" class="form-control" id="address" required>
+            </div>
+            <div class="mb-3">
+                <label for="region" class="form-label">Región</label>
+                <select class="form-control" id="region" required></select>
+            </div>
+            <div class="mb-3">
+                <label for="comuna" class="form-label">Comuna</label>
+                <select class="form-control" id="comuna" required></select>
+            </div>
+            <div class="mb-3">
+                <label for="location" class="form-label">Ubicación</label>
+                <button type="button" class="btn btn-primary" id="getLocationBtn">Detectar Ubicación</button>
+                <input type="text" class="form-control mt-2" id="location" readonly>
+            </div>
+            <div id="map" class="mb-3"></div>
+            <button type="submit" class="btn btn-primary">Confirmar Pago</button>
+        </form>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+        let map, marker;
+
+        function initMap() {
+            const initialPosition = [-33.4489, -70.6693]; // Santiago, Chile
+
+            map = L.map('map').setView(initialPosition, 12);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            marker = L.marker(initialPosition, { draggable: true }).addTo(map);
+
+            marker.on('dragend', function (event) {
+                const position = marker.getLatLng();
+                document.getElementById('location').value = `Lat: ${position.lat}, Lng: ${position.lng}`;
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Cargar las regiones y comunas usando fetch
+            function loadComunas() {
+                fetch('https://gist.githubusercontent.com/juanbrujo/0fd2f4d126b3ce5a95a7dd1f28b3d8dd/raw/b8575eb82dce974fd2647f46819a7568278396bd/comunas-regiones.json')
+                    .then(response => response.json())
+                    .then(data => {
+                        const regionSelect = document.getElementById('region');
+                        const comunaSelect = document.getElementById('comuna');
+                        regionSelect.innerHTML = '';
+                        comunaSelect.innerHTML = '';
+
+                        data.regiones.forEach(region => {
+                            let option = document.createElement('option');
+                            option.value = option.textContent = region.region;
+                            regionSelect.appendChild(option);
+                        });
+
+                        regionSelect.onchange = function() {
+                            const selectedRegion = this.value;
+                            const comunas = data.regiones.find(r => r.region === selectedRegion).comunas;
+                            comunaSelect.innerHTML = '';
+                            comunas.forEach(comuna => {
+                                let option = document.createElement('option');
+                                option.value = option.textContent = comuna;
+                                comunaSelect.appendChild(option);
+                            });
+                        };
+
+                        // Trigger change to load initial comunas
+                        regionSelect.dispatchEvent(new Event('change'));
+                    })
+                    .catch(error => {
+                        console.error('Error al cargar las comunas:', error);
+                    });
+            }
+
+            // Obtener la ubicación del usuario
+            function getLocation() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        const userLocation = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude
+                        };
+                        document.getElementById('location').value = `Lat: ${userLocation.lat}, Lng: ${userLocation.lng}`;
+                        map.setView(userLocation, 12);
+                        marker.setLatLng(userLocation);
+                    }, function(error) {
+                        console.error('Error al obtener la ubicación:', error);
+                    });
+                } else {
+                    console.error('Geolocalización no es soportada por este navegador.');
+                }
+            }
+
+            document.getElementById('getLocationBtn').addEventListener('click', getLocation);
+
+            loadComunas();
+            initMap();
+        });
+    </script>
+</body>
+</html>

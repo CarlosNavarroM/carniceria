@@ -8,6 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
 <body>
     <header id="navbar-placeholder">
     </header>
@@ -24,70 +25,101 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Carne</td>
-                    <td>$3500</td>
-                    <td><input type="number" value="1" min="1" class="form-control quantity-input"></td>
-                    <td>$3500</td>
-                    <td>
-                        <button class="btn btn-primary btn-sm remove-item">Eliminar</button>
-                    </td>
-                </tr>
-                <!-- Repetir para otros productos según sea necesario -->
+                <!-- Los productos del carrito se agregarán aquí dinámicamente -->
             </tbody>
         </table>
-        <button class="btn btn-danger" onclick="emptyCart()">Vaciar Carrito</button>
+        <button class="btn btn-danger" id="emptyCartBtn">Vaciar Carrito</button>
         <div class="d-flex justify-content-between">
             <button class="btn btn-outline-secondary">Continuar Comprando</button>
-            <button class="btn btn-primary">Proceder al Pago</button>
+            <button class="btn btn-primary" onclick="window.location.href='pago.html'">Proceder al Pago</button>
+
         </div>
     </main>
 
-    
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script>
-        // JavaScript para manejar las acciones del carrito
-        document.querySelectorAll('.remove-item').forEach(button => {
-            button.addEventListener('click', function() {
-                this.closest('tr').remove();
-                updateCartTotal();
-            });
-        });
-
-        document.querySelectorAll('.quantity-input').forEach(input => {
-            input.addEventListener('change', function() {
-                updateQuantity(this);
-            });
-        });
-
-        function updateQuantity(input) {
-            const row = input.closest('tr');
-            const price = parseFloat(row.cells[1].textContent.replace('$', ''));
-            const quantity = input.value;
-            const total = price * quantity;
-            row.cells[3].textContent = `$${total.toFixed(2)}`;
-            updateCartTotal();
-        }
-
-        function updateCartTotal() {
-            let total = 0;
-            document.querySelectorAll('#cartTable tbody tr').forEach(row => {
-                const price = parseFloat(row.cells[3].textContent.replace('$', ''));
-                total += price;
-            });
-            // Aquí puedes actualizar el total en algún lugar de la página, si es necesario
-        }
-
-        function emptyCart() {
-            const tableBody = document.querySelector('#cartTable tbody');
-            tableBody.innerHTML = '';
-            updateCartTotal();
-        }
-    </script>
-     <script>
         $(function() {
             $("#navbar-placeholder").load("navbar.html");
+
+            function loadCart() {
+                const cart = JSON.parse(localStorage.getItem('cart')) || [];
+                const cartTableBody = document.querySelector('#cartTable tbody');
+                cartTableBody.innerHTML = '';
+
+                if (cart.length === 0) {
+                    const row = document.createElement('tr');
+                    row.innerHTML = '<td colspan="5" class="text-center">El carrito está vacío</td>';
+                    cartTableBody.appendChild(row);
+                } else {
+                    cart.forEach(item => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${item.name}</td>
+                            <td>$${item.price}</td>
+                            <td><input type="number" value="${item.quantity}" min="1" class="form-control quantity-input" data-id="${item.id}"></td>
+                            <td>$${(item.price * item.quantity).toFixed(2)}</td>
+                            <td><button class="btn btn-primary btn-sm remove-item" data-id="${item.id}">Eliminar</button></td>
+                        `;
+                        cartTableBody.appendChild(row);
+                    });
+                }
+
+                updateCartTotal();
+            }
+
+            function updateCartTotal() {
+                let total = 0;
+                const cart = JSON.parse(localStorage.getItem('cart')) || [];
+                cart.forEach(item => {
+                    total += item.price * item.quantity;
+                });
+                // Actualiza el total en algún lugar de la página, si es necesario
+                // Ejemplo: document.querySelector('#total').textContent = `Total: $${total.toFixed(2)}`;
+            }
+
+            function removeItem(productId) {
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                cart = cart.filter(item => item.id !== productId);
+                localStorage.setItem('cart', JSON.stringify(cart));
+                loadCart();
+            }
+
+            function updateQuantity(productId, quantity) {
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                const index = cart.findIndex(item => item.id === productId);
+                if (index !== -1) {
+                    cart[index].quantity = quantity;
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    loadCart();
+                }
+            }
+
+            function emptyCart() {
+                localStorage.removeItem('cart');
+                loadCart();
+            }
+
+            // Evento para eliminar un producto
+            $(document).on('click', '.remove-item', function() {
+                const productId = $(this).data('id');
+                removeItem(productId);
+            });
+
+            // Evento para actualizar cantidad
+            $(document).on('change', '.quantity-input', function() {
+                const productId = $(this).data('id');
+                const quantity = parseInt($(this).val());
+                if (quantity > 0) {
+                    updateQuantity(productId, quantity);
+                }
+            });
+
+            // Evento para vaciar el carrito
+            document.querySelector('#emptyCartBtn').addEventListener('click', function() {
+                emptyCart();
+            });
+
+            loadCart();
         });
     </script>
 </body>

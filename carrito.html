@@ -25,7 +25,7 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Los productos del carrito se agregarán aquí dinámicamente -->
+             
             </tbody>
         </table>
         <button class="btn btn-danger" id="emptyCartBtn">Vaciar Carrito</button>
@@ -73,8 +73,7 @@
                 cart.forEach(item => {
                     total += item.price * item.quantity;
                 });
-                // Actualiza el total en algún lugar de la página, si es necesario
-                // Ejemplo: document.querySelector('#total').textContent = `Total: $${total.toFixed(2)}`;
+                
             }
 
             function removeItem(productId) {

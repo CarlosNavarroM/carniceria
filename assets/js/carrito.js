@@ -13,9 +13,9 @@ $(document).ready(function() {
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td>${item.name}</td>
-                    <td>$${item.price}</td>
+                    <td>${formatCurrency(item.price)}</td>
                     <td><input type="number" value="${item.quantity}" min="1" class="form-control quantity-input" data-id="${item.id}"></td>
-                    <td>$${(item.price * item.quantity).toFixed(2)}</td>
+                    <td>${formatCurrency(item.price * item.quantity)}</td>
                     <td><button class="btn btn-primary btn-sm remove-item" data-id="${item.id}">Eliminar</button></td>
                 `;
                 cartTableBody.appendChild(row);
@@ -23,6 +23,7 @@ $(document).ready(function() {
         }
 
         updateCartTotal();
+        updateCartCount(); // Actualiza el contador del carrito al cargar
     }
 
     function updateCartTotal() {
@@ -31,7 +32,13 @@ $(document).ready(function() {
         cart.forEach(item => {
             total += item.price * item.quantity;
         });
-        document.getElementById('cartTotal').innerText = `$${total.toFixed(2)}`;
+        document.getElementById('cartTotal').innerText = formatCurrency(total);
+    }
+
+    function updateCartCount() {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+        $('#cart-count').text(totalCount);
     }
 
     function removeItem(productId) {
@@ -39,7 +46,6 @@ $(document).ready(function() {
         cart = cart.filter(item => item.id !== productId);
         localStorage.setItem('cart', JSON.stringify(cart));
         loadCart();
-        updateCartCount();
     }
 
     function updateQuantity(productId, quantity) {
@@ -49,14 +55,12 @@ $(document).ready(function() {
             cart[index].quantity = quantity;
             localStorage.setItem('cart', JSON.stringify(cart));
             loadCart();
-            updateCartCount();
         }
     }
 
     function emptyCart() {
         localStorage.removeItem('cart');
         loadCart();
-        updateCartCount();
     }
 
     // Evento para eliminar un producto
@@ -79,14 +83,11 @@ $(document).ready(function() {
         emptyCart();
     });
 
-    loadCart();
-    
-    // Función para actualizar la cantidad de productos en el carrito
-    function updateCartCount() {
-        const cart = JSON.parse(localStorage.getItem('cart')) || [];
-        const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-        $('#cart-count').text(totalCount);
+    // Función para formatear el precio en CLP
+    function formatCurrency(amount) {
+        return new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(amount);
     }
 
-    updateCartCount();
+    loadCart();
+    updateCartCount(); // Actualiza el contador del carrito al cargar la página
 });

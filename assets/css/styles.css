@@ -64,6 +64,7 @@ h5{
     color: rgb(128, 0, 0); /* Precio en verde para destacar */
     font-weight: bold;
 }
+
 @media (min-width: 992px) { /* Pantallas grandes*/
     #carouselExampleCaptions .carousel-item img {
         max-height: 768px; 

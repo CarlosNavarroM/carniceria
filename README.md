@@ -39,6 +39,11 @@ Carnicería El Carvajal es una tienda en línea que permite a los usuarios explo
 - Tarjetas de productos (cards): Cada tarjeta muestra una imagen del producto, su nombre, descripción y precio.
 - Modal: Confirmar si el usuario quiere seguir comprando o ir al carrito después de agregar un producto.
 
+**Funciones en JavaScript**:
+
+- addToCart(): Añade un producto al carrito.
+- showModal(): Muestra el modal para confirmar la acción del usuario.
+
 ### 3. Carrito (carrito.html)
 
 **Funcionalidad**:
@@ -51,6 +56,14 @@ Carnicería El Carvajal es una tienda en línea que permite a los usuarios explo
 
 - Tabla de productos: Lista los productos en el carrito con su cantidad, precio y total.
 - Botones: Opciones para vaciar el carrito, continuar comprando o proceder al pago.
+
+**Funciones en JavaScript**:
+
+- loadCart(): Carga los productos del carrito desde localStorage.
+- updateCartTotal(): Calcula y muestra el total del carrito.
+- removeItem(): Elimina un producto del carrito.
+- updateQuantity(): Actualiza la cantidad de un producto en el carrito.
+- emptyCart(): Vacía el carrito.
 
 ### 4. Proceder al Pago (pago.html)
 
@@ -65,6 +78,13 @@ Carnicería El Carvajal es una tienda en línea que permite a los usuarios explo
 - Formulario de pago: Campos para nombre, dirección, región, comuna y ubicación.
 - Mapa interactivo (Leaflet.js): Mostrar la ubicación del usuario y permitir ajustar manualmente.
 
+**Funciones en JavaScript**:
+
+- loadComunas(): Carga las comunas correspondientes a la región seleccionada.
+- getLocation(): Obtiene la ubicación del usuario y sugiere región y comuna.
+- initMap(): Inicializa el mapa interactivo.
+- validateForm(): Valida los campos del formulario de pago.
+
 ### 5. Contacto (contacto.html)
 
 **Funcionalidad**:
@@ -76,6 +96,10 @@ Carnicería El Carvajal es una tienda en línea que permite a los usuarios explo
 
 - Formulario de contacto: Campos para nombre, correo electrónico, teléfono, asunto y mensaje.
 
+**Funciones en JavaScript**:
+
+- validateContactForm(): Valida los campos del formulario de contacto.
+
 ### 6. Sugerencias (sugerencias.html)
 
 **Funcionalidad**:
@@ -86,6 +110,10 @@ Carnicería El Carvajal es una tienda en línea que permite a los usuarios explo
 **Componentes**:
 
 - Formulario de sugerencias: Campos para nombre, correo electrónico, tipo de sugerencia y mensaje.
+
+**Funciones en JavaScript**:
+
+- validateSuggestionForm(): Valida los campos del formulario de sugerencias.
 
 ## Validaciones y Funcionalidades en JavaScript
 
@@ -99,9 +127,19 @@ Carnicería El Carvajal es una tienda en línea que permite a los usuarios explo
 
 ### Funciones en JavaScript
 
-- `updateCartCount()`: Actualiza el contador de productos en el carrito.
-- `getLocation()`: Obtiene la ubicación del usuario y sugiere región y comuna.
-- `loadComunas()`: Carga las comunas correspondientes a la región seleccionada.
+- updateCartCount(): Actualiza el contador de productos en el carrito.
+- getLocation(): Obtiene la ubicación del usuario y sugiere región y comuna.
+- loadComunas(): Carga las comunas correspondientes a la región seleccionada.
+- addToCart(): Añade un producto al carrito.
+- showModal(): Muestra el modal para confirmar la acción del usuario.
+- loadCart(): Carga los productos del carrito desde localStorage.
+- updateCartTotal(): Calcula y muestra el total del carrito.
+- removeItem(): Elimina un producto del carrito.
+- updateQuantity(): Actualiza la cantidad de un producto en el carrito.
+- emptyCart(): Vacía el carrito.
+- validateForm(): Valida los campos del formulario de pago.
+- validateContactForm(): Valida los campos del formulario de contacto.
+- validateSuggestionForm(): Valida los campos del formulario de sugerencias.
 
 ## Tecnologías Utilizadas
 

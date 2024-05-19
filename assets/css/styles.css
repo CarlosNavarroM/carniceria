@@ -75,6 +75,18 @@ h5{
     width: 5px;
 
 }
+
+.navbar-logo {
+    height: 95px; 
+    width: auto;
+}
+
+.navbar {
+    padding-top: 0;
+    padding-bottom: 0;
+    max-height: 85px; 
+}
+
 @media (min-width: 992px) { /* Pantallas grandes*/
     #carouselExampleCaptions .carousel-item img {
         max-height: 768px; 

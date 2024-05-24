@@ -17,7 +17,10 @@
     </style>
 </head>
 <body>
+    <!-- Encabezado de la página -->
     <header id="navbar-placeholder"></header>
+
+    <!-- Contenido principal -->
     <main class="container mt-5">
         <h2>Proceder al Pago</h2>
         <form id="paymentForm">
@@ -42,11 +45,16 @@
                 <button type="button" class="btn btn-primary" id="getLocationBtn">Detectar Ubicación</button>
                 <input type="text" class="form-control mt-2" id="location" readonly>
             </div>
+            <!-- Mapa para mostrar la ubicación -->
             <div id="map" class="mb-3"></div>
+            <!-- Fin del mapa -->
+
+            <!-- Botón para confirmar el pago -->
             <button type="submit" class="btn btn-primary">Confirmar Pago</button>
         </form>
     </main>
 
+    <!-- Scripts al final de la página -->
     <script src="assets/js/navbar.js"></script>
     <script src="assets/js/pago.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

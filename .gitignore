@@ -23,6 +23,17 @@ media
 # C extensions
 *.so
 
+# Entornos virtuales de Python
+env/
+.venv/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Archivos de caché de Python
+*.pyc
+__pycache__/
 # Distribution / packaging
 .Python
 build/

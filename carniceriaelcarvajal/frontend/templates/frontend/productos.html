@@ -11,51 +11,31 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <header id="navbar-placeholder"></header>
+    <header id="navbar-placeholder">
+        {% include 'frontend/navbar.html' %}
+    </header>
     <div id="productos" class="container my-4">
         <h2 class="text-center">Nuestros productos</h2>
         <div class="row">
+            {% for producto in productos %}
             <div class="col-md-4">
-                <div class="card">
-                    <img src="{% static 'frontend/img/products/carne.jpg' %}" class="card-img-top img-fluid" alt="Carne">
+                <div class="card mb-4">
+                    <img src="{{ producto.imagen_url }}" class="card-img-top img-fluid" alt="{{ producto.nombre }}">
                     <div class="card-body">
-                        <h5 class="card-title">Carne</h5>
-                        <p class="card-text">Carne molida de alta calidad.</p>
+                        <h5 class="card-title">{{ producto.nombre }}</h5>
+                        <p class="card-text">{{ producto.descripcion }}</p>
                         <div class="product-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
+                            <!-- Añadir estrellas aquí si tienes un sistema de rating -->
                         </div>
-                        <p class="product-price">$3500 por Kg</p>
+                        <p class="product-price">${{ producto.precio }}</p>
                         <input type="number" class="form-control quantity-input" value="1" min="1">
-                        <button class="btn btn-primary add-to-cart" data-id="1" data-name="Carne" data-price="3500">Añadir al carrito</button>
+                        <button class="btn btn-primary add-to-cart" data-id="{{ producto.id }}" data-name="{{ producto.nombre }}" data-price="{{ producto.precio }}">Añadir al carrito</button>
                     </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
     </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="cartModalLabel">Producto añadido al carrito</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    ¿Quieres seguir comprando o ir al carrito?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Seguir Comprando</button>
-                    <button type="button" class="btn btn-primary" onclick="window.location.href='{% url 'carrito' %}'">Ir al Carrito</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Fin Modal -->
 
     <script>
         $(function() {

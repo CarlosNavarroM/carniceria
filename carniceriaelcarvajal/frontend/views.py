@@ -50,7 +50,8 @@ def index(request):
     return render(request, 'frontend/index.html')
 
 def productos(request):
-    return render(request, 'frontend/productos.html')
+    productos = Producto.objects.all()
+    return render(request, 'frontend/productos.html', {'productos': productos})
 
 def contacto(request):
     return render(request, 'frontend/contacto.html')

@@ -12,4 +12,5 @@ urlpatterns = [
     path('pago/', views.pago, name='pago'),
     path('signup/', views.signup, name='signup'),
     path('navbar/', views.navbar, name='navbar'),
+    
 ]

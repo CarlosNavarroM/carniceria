@@ -5,7 +5,6 @@ from django.core.mail import send_mail
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as auth_login
-from django.contrib.auth.forms import UserCreationForm
 from .models import Producto
 from .forms import ProductoForm
 from django.shortcuts import render, redirect
@@ -59,41 +58,6 @@ def sugerencia_view(request):
 
     return render(request, 'frontend/sugerencias.html')
 
-# Vista para listar productos
-def lista_productos(request):
-    productos = Producto.objects.all()
-    return render(request, 'productos/lista_productos.html', {'productos': productos})
-
-# Vista para crear un nuevo producto
-def crear_producto(request):
-    if request.method == 'POST':
-        form = ProductoForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('lista_productos')
-    else:
-        form = ProductoForm()
-    return render(request, 'productos/crear_producto.html', {'form': form})
-
-# Vista para actualizar un producto existente
-def actualizar_producto(request, pk):
-    producto = get_object_or_404(Producto, pk=pk)
-    if request.method == 'POST':
-        form = ProductoForm(request.POST, instance=producto)
-        if form.is_valid():
-            form.save()
-            return redirect('lista_productos')
-    else:
-        form = ProductoForm(instance=producto)
-    return render(request, 'productos/crear_producto.html', {'form': form})
-
-# Vista para borrar un producto existente
-def borrar_producto(request, pk):
-    producto = get_object_or_404(Producto, pk=pk)
-    if request.method == 'POST':
-        producto.delete()
-        return redirect('lista_productos')
-    return render(request, 'productos/borrar_producto.html', {'producto': producto})
 
 # Vistas para las páginas principales
 def index(request):
@@ -107,7 +71,6 @@ def contacto(request):
     return render(request, 'frontend/contacto.html')
 
 
-# Vista para el inicio de sesión
 def login_view(request):
     if request.method == "POST":
         username = request.POST['username']
@@ -116,9 +79,9 @@ def login_view(request):
         if user is not None:
             auth_login(request, user)
             if user.is_superuser:
-                return redirect('/admin/')  # Redirige al panel de administración
+                return redirect('/admin/')
             else:
-                return redirect('index')  # Redirige a la página principal o a otra página adecuada
+                return redirect('index')
         else:
             messages.error(request, 'Nombre de usuario o contraseña incorrectos.')
     return render(request, 'frontend/login.html')

@@ -27,7 +27,8 @@
                         <div class="product-rating">
                             <!-- Añadir estrellas aquí si tienes un sistema de rating -->
                         </div>
-                        <p class="product-price">${{ producto.precio }}</p>
+                        <p class="product-price">${{ producto.precio|floatformat:0 }}</p>
+
                         <input type="number" class="form-control quantity-input" value="1" min="1">
                         <button class="btn btn-primary add-to-cart" data-id="{{ producto.id }}" data-name="{{ producto.nombre }}" data-price="{{ producto.precio }}">Añadir al carrito</button>
                     </div>
@@ -36,6 +37,24 @@
             {% endfor %}
         </div>
     </div>
+<!-- Modal -->
+<div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="cartModalLabel">Producto añadido al carrito</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                El producto ha sido añadido a tu carrito. ¿Qué te gustaría hacer ahora?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Seguir comprando</button>
+                <a href="{% url 'carrito' %}" class="btn btn-primary">Ir al carrito</a>
+            </div>
+        </div>
+    </div>
+</div>
 
     <script>
         $(function() {

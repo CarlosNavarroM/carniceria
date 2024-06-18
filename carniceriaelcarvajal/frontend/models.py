@@ -5,14 +5,14 @@ from django.db import models
 class Usuario(AbstractUser):
     groups = models.ManyToManyField(
         'auth.Group',
-        related_name='usuario_set',  # Cambia esto
+        related_name='usuario_set',  
         blank=True,
         help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.',
         related_query_name='usuario',
     )
     user_permissions = models.ManyToManyField(
         'auth.Permission',
-        related_name='usuario_set',  # Cambia esto
+        related_name='usuario_set',  
         blank=True,
         help_text='Specific permissions for this user.',
         related_query_name='usuario',

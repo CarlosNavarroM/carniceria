@@ -103,7 +103,10 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             auth_login(request, user)
-            return redirect('index')
+            if user.is_superuser:
+                return redirect('/admin/')  # Redirige al panel de administración
+            else:
+                return redirect('index')  # Redirige a la página principal o a otra página adecuada
         else:
             messages.error(request, 'Nombre de usuario o contraseña incorrectos.')
     return render(request, 'frontend/login.html')

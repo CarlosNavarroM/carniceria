@@ -12,6 +12,7 @@ from django.shortcuts import render, redirect
 from .models import Sugerencia
 from django.contrib.auth import login
 from .forms import RegistroForm
+from .models import MensajeContacto
 
 def signup(request):
     if request.method == 'POST':
@@ -35,13 +36,24 @@ def sugerencia_view(request):
         tipo_sugerencia = request.POST.get('suggestionType')
         sugerencia_text = request.POST.get('sugerencia')
 
-        nueva_sugerencia = Sugerencia(
-            usuario=request.user if request.user.is_authenticated else None,
-            tipo_sugerencia=tipo_sugerencia,
-            sugerencia=sugerencia_text,
-        )
+        if tipo_sugerencia == 'contacto':
+            nueva_sugerencia = MensajeContacto(
+                usuario=request.user if request.user.is_authenticated else None,
+                nombre=nombre,
+                correo=correo,
+                telefono=telefono,
+                asunto=asunto,
+                mensaje=sugerencia_text,
+            )
+        else:
+            nueva_sugerencia = Sugerencia(
+                usuario=request.user if request.user.is_authenticated else None,
+                tipo_sugerencia=tipo_sugerencia,
+                sugerencia=sugerencia_text,
+            )
+        
         nueva_sugerencia.save()
-        messages.success(request, '¡Gracias por tu sugerencia!')
+        messages.success(request, '¡Gracias por contactarte con nosotros!')
 
         return redirect('sugerencias')
 

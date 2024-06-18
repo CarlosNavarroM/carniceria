@@ -1,7 +1,15 @@
 {% load static %}
-<!-- Barra de navegación -->
- 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <style>
+        @media (max-width: 768px) {
+    .navbar-collapse.show {
+        background-color: rgb(36, 36, 36);
+        height: auto;
+        width: auto;
+        z-index: 3;
+    }
+}
+    </style>
     <div class="container-fluid">
         <!-- Logo -->
         <a class="navbar-brand" href="{% url 'index' %}">
@@ -24,7 +32,7 @@
                     <a class="nav-link" href="{% url 'sugerencias' %}">Contacto y Sugerencias</a>
                 </li>
             </ul>
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav ms-auto">
                 {% if user.is_authenticated %}
                 <li class="nav-item">
                     <a class="nav-link" href="#"><i class="fas fa-user"></i> {{ user.username }}</a>
@@ -47,15 +55,3 @@
         </div>
     </div>
 </nav>
-<script>
-    $(function() {
-        updateCartCount();
-    });
-
-    function updateCartCount() {
-        const cart = JSON.parse(localStorage.getItem('cart')) || [];
-        const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-        $('#cart-count').text(totalCount);
-    }
-</script>
-

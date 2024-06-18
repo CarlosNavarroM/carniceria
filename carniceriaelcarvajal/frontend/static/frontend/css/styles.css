@@ -87,6 +87,8 @@ h5{
     max-height: 85px; 
 }
 
+
+
 @media (min-width: 992px) { /* Pantallas grandes*/
     #carouselExampleCaptions .carousel-item img {
         max-height: 768px; 
@@ -105,4 +107,12 @@ h5{
         opacity: 0.6; /* Puedes ajustar este valor según lo desees */
     }
 
-
+ /* solo moviles */
+ @media (max-width: 768px) {
+    .navbar-collapse.show {
+        background-color: rgb(36, 36, 36);
+        height: auto;
+        width: auto;
+        z-index: 3;
+    }
+}

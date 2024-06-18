@@ -8,6 +8,30 @@ from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.forms import UserCreationForm
 from .models import Producto
 from .forms import ProductoForm
+from django.shortcuts import render, redirect
+from .models import Sugerencia
+
+
+def sugerencia_view(request):
+    if request.method == 'POST':
+        nombre = request.POST.get('nombre')
+        correo = request.POST.get('correo')
+        telefono = request.POST.get('telefono')
+        asunto = request.POST.get('asunto')
+        tipo_sugerencia = request.POST.get('suggestionType')
+        sugerencia_text = request.POST.get('sugerencia')
+
+        nueva_sugerencia = Sugerencia(
+            usuario=request.user if request.user.is_authenticated else None,
+            tipo_sugerencia=tipo_sugerencia,
+            sugerencia=sugerencia_text,
+        )
+        nueva_sugerencia.save()
+        messages.success(request, '¡Gracias por tu sugerencia!')
+
+        return redirect('sugerencias')
+
+    return render(request, 'frontend/sugerencias.html')
 
 # Vista para listar productos
 def lista_productos(request):
@@ -56,8 +80,6 @@ def productos(request):
 def contacto(request):
     return render(request, 'frontend/contacto.html')
 
-def sugerencias(request):
-    return render(request, 'frontend/sugerencias.html')
 
 # Vista para el inicio de sesión
 def login_view(request):

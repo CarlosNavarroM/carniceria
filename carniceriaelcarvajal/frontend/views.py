@@ -6,12 +6,12 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as auth_login
 from .models import Producto
-from .forms import ProductoForm
 from django.shortcuts import render, redirect
 from .models import Sugerencia
 from django.contrib.auth import login
 from .forms import RegistroForm
 from .models import MensajeContacto
+from django.contrib.auth import logout as auth_logout
 
 def signup(request):
     if request.method == 'POST':
@@ -85,6 +85,12 @@ def login_view(request):
         else:
             messages.error(request, 'Nombre de usuario o contraseña incorrectos.')
     return render(request, 'frontend/login.html')
+
+
+def logout_view(request):
+    auth_logout(request)
+    return redirect('index')
+
 
 def carrito(request):
     return render(request, 'frontend/carrito.html')

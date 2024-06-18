@@ -1,13 +1,15 @@
 # frontend/urls.py
 from django.urls import path
 from . import views
+from .views import logout_view
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('productos/', views.productos, name='productos'),  # Asegúrate de que esta línea esté incluida
+    path('productos/', views.productos, name='productos'),
     path('contacto/', views.contacto, name='contacto'),
     path('sugerencias/', views.sugerencia_view, name='sugerencias'),
     path('login/', views.login_view, name='login'),
+    path('logout/', logout_view, name='logout'),
     path('carrito/', views.carrito, name='carrito'),
     path('pago/', views.pago, name='pago'),
     path('signup/', views.signup, name='signup'),

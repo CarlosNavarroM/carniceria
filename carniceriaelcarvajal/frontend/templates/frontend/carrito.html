@@ -14,26 +14,28 @@
     <header id="navbar-placeholder"></header>
     <main class="container mt-5">
         <h2>Carrito de Compras</h2>
-        <table class="table" id="cartTable">
-            <thead>
-                <tr>
-                    <th scope="col">Producto</th>
-                    <th scope="col">Precio</th>
-                    <th scope="col">Cantidad</th>
-                    <th scope="col">Total</th>
-                    <th scope="col">Acciones</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="3" class="text-end"><strong>Total:</strong></td>
-                    <td colspan="2" id="cartTotal">$0</td>
-                </tr>
-            </tfoot>
-        </table>
+        <div class="table-responsive">
+            <table class="table" id="cartTable">
+                <thead>
+                    <tr>
+                        <th scope="col">Producto</th>
+                        <th scope="col">Precio</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Total</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3" class="text-end"><strong>Total:</strong></td>
+                        <td colspan="2" id="cartTotal">$0</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
         <button class="btn btn-danger" id="emptyCartBtn">Vaciar Carrito</button>
-        <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between mt-3">
             <button class="btn btn-outline-secondary" onclick="window.location.href='{% url 'productos' %}'">Continuar Comprando</button>
             <button class="btn btn-primary" onclick="window.location.href='{% url 'pago' %}'">Proceder al Pago</button>
         </div>

@@ -10,6 +10,20 @@ from .models import Producto
 from .forms import ProductoForm
 from django.shortcuts import render, redirect
 from .models import Sugerencia
+from django.contrib.auth import login
+from .forms import RegistroForm
+
+def signup(request):
+    if request.method == 'POST':
+        form = RegistroForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            messages.success(request, 'Cuenta creada exitosamente.')
+            
+    else:
+        form = RegistroForm()
+    return render(request, 'frontend/signup.html', {'form': form})
 
 
 def sugerencia_view(request):
@@ -100,17 +114,7 @@ def carrito(request):
 def pago(request):
     return render(request, 'frontend/pago.html')
 
-# Vista para el registro de nuevos usuarios
-def signup(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Cuenta creada exitosamente.')
-            return redirect('login')
-    else:
-        form = UserCreationForm()
-    return render(request, 'frontend/signup.html', {'form': form})
+
 
 def navbar(request):
     return render(request, 'frontend/navbar.html')

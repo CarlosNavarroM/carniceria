@@ -13,8 +13,7 @@ class UsuarioAdmin(admin.ModelAdmin):
     search_fields = ('username', 'email')
 
 # Registrar otros modelos si es necesario
-admin.site.register(Carrito)
-admin.site.register(DetalleCarrito)
+
 admin.site.register(Orden)
 admin.site.register(DetalleEnvio)
 admin.site.register(MensajeContacto)
